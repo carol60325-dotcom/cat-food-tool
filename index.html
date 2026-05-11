@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>貓咪每日餐量計算器</title>
+  <title>貓咪每日餐量計算器 v3</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,119 +18,137 @@
     }
 
     .app {
-      max-width: 520px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 16px;
     }
 
     h1 {
-      font-size: 26px;
-      margin: 12px 0 4px;
       text-align: center;
+      margin: 10px 0 4px;
+      font-size: 25px;
     }
 
     .subtitle {
       text-align: center;
       color: #7b6654;
-      margin-bottom: 20px;
       font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+      position: sticky;
+      top: 0;
+      background: #fff8f0;
+      padding: 8px 0;
+      z-index: 10;
+    }
+
+    .tab-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #6b4423;
+      background: #f3dfc8;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+      background: #d8844f;
     }
 
     .card {
       background: #ffffff;
       border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 6px 20px rgba(120, 80, 40, 0.12);
     }
 
-    .card h2 {
-      margin: 0 0 12px;
+    h2 {
       font-size: 19px;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 12px 0 8px;
     }
 
     label {
       display: block;
-      margin-top: 12px;
-      font-weight: 600;
+      margin-top: 10px;
+      font-weight: 800;
       font-size: 14px;
     }
 
-    input {
+    input, select, textarea {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
+      padding: 11px;
+      margin-top: 5px;
       border: 1px solid #d8c8b6;
       border-radius: 12px;
       font-size: 16px;
       background: #fffdf9;
+      color: #3a2a1f;
+    }
+
+    textarea {
+      min-height: 64px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      width: 100%;
+      background: #d8844f;
+      color: #ffffff;
+      margin-top: 14px;
+    }
+
+    .secondary {
+      background: #f3dfc8;
+      color: #6b4423;
+      margin-top: 8px;
+    }
+
+    .danger {
+      background: #ffe4e4;
+      color: #9d2d2d;
+      margin-top: 8px;
+    }
+
+    .small-btn {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 10px;
     }
 
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 14px;
-      background: #d8844f;
-      color: white;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 16px;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    .result-main {
-      font-size: 28px;
-      font-weight: 800;
-      color: #b85f2a;
-      margin: 4px 0;
-    }
-
-    .result-box {
-      background: #fff3e5;
-      border-radius: 14px;
-      padding: 14px;
-      margin-top: 12px;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #7b6654;
-    }
-
-    .warning {
-      background: #fff0f0;
-      color: #9d2d2d;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 12px;
-      font-weight: 600;
-    }
-
-    .ok {
-      background: #effaf2;
-      color: #2e7d45;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 12px;
-      font-weight: 600;
-    }
-
-    .footer {
-      text-align: center;
-      color: #8b7765;
-      font-size: 12px;
-      margin: 20px 0;
+    .three-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
     }
 
     .tag {
@@ -141,264 +159,742 @@
       border-radius: 999px;
       font-size: 13px;
       margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .summary-box {
+      background: #fff3e5;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .summary-title {
+      font-size: 12px;
+      color: #7b6654;
+    }
+
+    .summary-value {
+      font-size: 18px;
+      font-weight: 900;
+      color: #b85f2a;
+    }
+
+    .food-card {
+      background: #fffaf3;
+      border: 1px solid #ead9c7;
+      border-radius: 15px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .food-title {
+      font-weight: 900;
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .muted {
+      color: #7b6654;
+      font-size: 13px;
+    }
+
+    .help {
+      font-size: 13px;
+      color: #7b6654;
+      margin-top: 8px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .notice-ok {
+      background: #effaf2;
+      color: #2e7d45;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 10px;
+      font-weight: 800;
+    }
+
+    .notice-warn {
+      background: #fff0f0;
+      color: #9d2d2d;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 10px;
+      font-weight: 800;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #fffaf3;
+      border: 1px solid #ead9c7;
+    }
+
+    .check-item input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    .meal-card {
+      background: #fffaf3;
+      border: 1px solid #ead9c7;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .meal-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #b85f2a;
+      margin-bottom: 8px;
+    }
+
+    .food-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px dashed #e4d3bf;
+      padding: 8px 0;
+    }
+
+    .food-line:last-child {
+      border-bottom: none;
+    }
+
+    .footer {
+      text-align: center;
+      color: #8b7765;
+      font-size: 12px;
+      margin: 18px 0;
+    }
+
+    @media (max-width: 460px) {
+      .row, .three-row, .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .app {
+        padding: 14px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="app">
     <h1>貓咪每日餐量計算器</h1>
-    <div class="subtitle">第一版：主食 145 kcal＋零食 35 kcal</div>
+    <div class="subtitle">v3：勾選食物，自動產生 5 餐餐表</div>
 
-    <section class="card">
-      <span class="tag">每日設定</span>
-      <h2>今天的熱量額度</h2>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('planner')">今日自動分配</button>
+      <button class="tab-btn" onclick="showTab('foods')">食物資料庫</button>
+    </div>
 
-      <div class="row">
-        <div>
-          <label>每日總熱量 kcal</label>
-          <input id="totalCalories" type="number" value="180" />
-        </div>
-        <div>
-          <label>一天總餐數</label>
-          <input id="totalMeals" type="number" value="5" />
-        </div>
-      </div>
+    <!-- 今日自動分配 -->
+    <section id="plannerTab">
+      <section class="card">
+        <span class="tag">每日限制</span>
+        <h2>今天的熱量與餐數</h2>
 
-      <div class="row">
-        <div>
-          <label>主食熱量 kcal</label>
-          <input id="mainCalories" type="number" value="145" />
+        <div class="three-row">
+          <div>
+            <label>每日總熱量 kcal</label>
+            <input id="limitTotal" type="number" value="180" oninput="saveSettings(); generatePlan();" />
+          </div>
+          <div>
+            <label>主食額度 kcal</label>
+            <input id="limitMain" type="number" value="145" oninput="saveSettings(); generatePlan();" />
+          </div>
+          <div>
+            <label>零食額度 kcal</label>
+            <input id="limitTreat" type="number" value="35" oninput="saveSettings(); generatePlan();" />
+          </div>
         </div>
-        <div>
-          <label>零食熱量 kcal</label>
-          <input id="treatCalories" type="number" value="35" />
-        </div>
-      </div>
 
-      <div class="row">
-        <div>
-          <label>主食餐數</label>
-          <input id="mainMeals" type="number" value="4" />
+        <div class="three-row">
+          <div>
+            <label>一天總餐數</label>
+            <input id="totalMeals" type="number" value="5" min="1" oninput="saveSettings(); generatePlan();" />
+          </div>
+          <div>
+            <label>主食餐數</label>
+            <input id="mainMealCount" type="number" value="4" min="0" oninput="saveSettings(); generatePlan();" />
+          </div>
+          <div>
+            <label>零食放第幾餐</label>
+            <input id="treatMealNumber" type="number" value="3" min="1" oninput="saveSettings(); generatePlan();" />
+          </div>
         </div>
-        <div>
-          <label>罐頭／零食餐數</label>
-          <input id="treatMeals" type="number" value="1" />
+
+        <p class="help">
+          預設是一天 5 餐，其中 4 餐主食，零食放第 3 餐。  
+          主食會平均分到主食餐，零食會放到指定餐。
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="tag">今日主食</span>
+        <h2>今天主食有哪些？</h2>
+        <div id="mainFoodChecks" class="check-list"></div>
+      </section>
+
+      <section class="card">
+        <span class="tag">今日零食</span>
+        <h2>今天零食有哪些？</h2>
+        <div id="treatFoodChecks" class="check-list"></div>
+      </section>
+
+      <section class="card">
+        <span class="tag">今日餐表</span>
+        <h2>自動產生結果</h2>
+
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-title">主食</div>
+            <div class="summary-value" id="mainSummary">0 kcal</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">零食</div>
+            <div class="summary-value" id="treatSummary">0 kcal</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">全天</div>
+            <div class="summary-value" id="totalSummary">0 kcal</div>
+          </div>
         </div>
-      </div>
+
+        <div id="planNotice"></div>
+        <div id="mealPlan"></div>
+      </section>
     </section>
 
-    <section class="card">
-      <span class="tag">主食</span>
-      <h2>乾飼料</h2>
+    <!-- 食物資料庫 -->
+    <section id="foodsTab" class="hidden">
+      <section class="card">
+        <span class="tag">新增食物</span>
+        <h2>建立手邊食物資料</h2>
 
-      <label>乾飼料熱量 kcal / 100g</label>
-      <input id="dryKcalPer100g" type="number" placeholder="例如：380" />
+        <label>分類</label>
+        <select id="foodCategory">
+          <option value="主食">主食</option>
+          <option value="零食">零食</option>
+          <option value="皆可">主食／零食皆可</option>
+        </select>
 
-      <p class="small">
-        如果包裝寫 3800 kcal/kg，請填 380。<br />
-        因為 3800 kcal/kg = 380 kcal/100g。
-      </p>
+        <div class="row">
+          <div>
+            <label>品牌</label>
+            <input id="foodBrand" type="text" placeholder="例如 皇家" />
+          </div>
+          <div>
+            <label>品名</label>
+            <input id="foodName" type="text" placeholder="例如 室內貓乾乾" />
+          </div>
+        </div>
+
+        <label>熱量標示方式</label>
+        <select id="foodCalorieMode" onchange="updateFoodModeHelp()">
+          <option value="per100g">已知 kcal / 100g</option>
+          <option value="perkg">包裝寫 kcal / kg</option>
+          <option value="perpack">一包／一罐／一條共幾 kcal</option>
+        </select>
+
+        <div id="modePer100g">
+          <label>kcal / 100g</label>
+          <input id="foodKcalPer100g" type="number" placeholder="例如 380" />
+        </div>
+
+        <div id="modePerKg" class="hidden">
+          <label>kcal / kg</label>
+          <input id="foodKcalPerKg" type="number" placeholder="例如 3800" />
+        </div>
+
+        <div id="modePerPack" class="hidden">
+          <div class="row">
+            <div>
+              <label>整份熱量 kcal</label>
+              <input id="foodPackKcal" type="number" placeholder="例如 90" />
+            </div>
+            <div>
+              <label>整份重量 g</label>
+              <input id="foodPackGram" type="number" placeholder="例如 80" />
+            </div>
+          </div>
+        </div>
+
+        <label>備註</label>
+        <textarea id="foodNote" placeholder="例如：常當罐頭餐、開封後冷藏"></textarea>
+
+        <button class="primary" onclick="addFood()">＋新增到資料庫</button>
+
+        <p class="help">
+          乾飼料常見 3800 kcal/kg，系統會自動換算成 380 kcal/100g。<br>
+          罐頭如果寫 90 kcal/罐、80g，系統會換算成 112.5 kcal/100g。
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="tag">目前資料庫</span>
+        <h2>已建立的食物</h2>
+        <div id="foodList"></div>
+      </section>
     </section>
 
-    <section class="card">
-      <span class="tag">零食額度</span>
-      <h2>罐頭或其他濕食</h2>
-
-      <label>罐頭熱量 kcal / 100g</label>
-      <input id="wetKcalPer100g" type="number" placeholder="例如：90" />
-
-      <label>今天想用多少零食額度給罐頭 kcal</label>
-      <input id="wetUseCalories" type="number" value="35" />
-
-      <p class="small">
-        如果罐頭用滿 35 kcal，今天就不建議再給其他零食。<br />
-        如果只用 25 kcal，就還有 10 kcal 可以給肉泥、凍乾或訓練用。
-      </p>
-    </section>
-
-    <section class="card">
-      <button onclick="calculate()">計算今天餵多少</button>
-    </section>
-
-    <section class="card" id="resultCard" style="display:none;">
-      <span class="tag">計算結果</span>
-      <h2>今天建議份量</h2>
-
-      <div class="result-box">
-        <div>乾飼料一天總量</div>
-        <div class="result-main" id="dryTotalGram">-- g</div>
-        <div class="small" id="dryMealGram">每餐 -- g</div>
-      </div>
-
-      <div class="result-box">
-        <div>罐頭／濕食今日份量</div>
-        <div class="result-main" id="wetTotalGram">-- g</div>
-        <div class="small" id="wetMealGram">每餐 -- g</div>
-      </div>
-
-      <div class="result-box">
-        <div>今日熱量分配</div>
-        <p id="calorieSummary"></p>
-      </div>
-
-      <div id="notice"></div>
-    </section>
-
-    <section class="card">
-      <span class="tag">小提醒</span>
-      <h2>使用方式</h2>
-      <p>
-        這個版本的邏輯是：乾飼料算主食，罐頭算零食額度。
-        如果哪天罐頭想當主食吃，就之後可以再做第二種模式。
-      </p>
-      <p class="small">
-        這只是幫你換算克數的小工具，熱量目標仍以醫生建議為主。
-      </p>
-    </section>
-
-    <div class="footer">貓咪每日餐量計算器 v1</div>
+    <div class="footer">資料會存在目前瀏覽器中｜貓咪每日餐量計算器 v3</div>
   </main>
 
   <script>
-    function getNumber(id) {
-      return Number(document.getElementById(id).value);
-    }
+    let foods = [];
+    let selectedMainIds = [];
+    let selectedTreatIds = [];
 
     function round(value, digits = 1) {
       return Math.round(value * Math.pow(10, digits)) / Math.pow(10, digits);
     }
 
-    function calculate() {
-      const totalCalories = getNumber("totalCalories");
-      const mainCalories = getNumber("mainCalories");
-      const treatCalories = getNumber("treatCalories");
-      const totalMeals = getNumber("totalMeals");
-      const mainMeals = getNumber("mainMeals");
-      const treatMeals = getNumber("treatMeals");
-
-      const dryKcalPer100g = getNumber("dryKcalPer100g");
-      const wetKcalPer100g = getNumber("wetKcalPer100g");
-      const wetUseCalories = getNumber("wetUseCalories");
-
-      const resultCard = document.getElementById("resultCard");
-      const notice = document.getElementById("notice");
-
-      if (!dryKcalPer100g || dryKcalPer100g <= 0) {
-        alert("請輸入乾飼料的熱量，例如 380 kcal / 100g");
-        return;
-      }
-
-      if (!wetKcalPer100g || wetKcalPer100g <= 0) {
-        alert("請輸入罐頭或濕食的熱量，例如 90 kcal / 100g");
-        return;
-      }
-
-      if (!mainMeals || mainMeals <= 0) {
-        alert("主食餐數要大於 0");
-        return;
-      }
-
-      if (!treatMeals || treatMeals <= 0) {
-        alert("罐頭／零食餐數要大於 0");
-        return;
-      }
-
-      const dryTotalGram = mainCalories / dryKcalPer100g * 100;
-      const dryMealGram = dryTotalGram / mainMeals;
-
-      const wetTotalGram = wetUseCalories / wetKcalPer100g * 100;
-      const wetMealGram = wetTotalGram / treatMeals;
-
-      const treatLeft = treatCalories - wetUseCalories;
-      const usedTotalCalories = mainCalories + wetUseCalories;
-      const totalLeft = totalCalories - usedTotalCalories;
-
-      document.getElementById("dryTotalGram").textContent = `${round(dryTotalGram)} g`;
-      document.getElementById("dryMealGram").textContent = `分 ${mainMeals} 餐，每餐約 ${round(dryMealGram)} g`;
-
-      document.getElementById("wetTotalGram").textContent = `${round(wetTotalGram)} g`;
-      document.getElementById("wetMealGram").textContent = `分 ${treatMeals} 餐，每餐約 ${round(wetMealGram)} g`;
-
-      document.getElementById("calorieSummary").innerHTML = `
-        主食：${mainCalories} kcal<br />
-        罐頭／零食已使用：${wetUseCalories} kcal<br />
-        今日已安排：${usedTotalCalories} kcal<br />
-        每日上限：${totalCalories} kcal
-      `;
-
-      if (treatLeft < 0) {
-        notice.innerHTML = `
-          <div class="warning">
-            罐頭已超過零食額度 ${Math.abs(treatLeft)} kcal。<br />
-            今天總熱量可能會超過醫生建議，可以減少罐頭或其他零食。
-          </div>
-        `;
-      } else if (treatLeft === 0) {
-        notice.innerHTML = `
-          <div class="ok">
-            今天零食額度剛好用完。<br />
-            如果罐頭吃滿這個份量，今天就不建議再給其他零食。
-          </div>
-        `;
-      } else {
-        notice.innerHTML = `
-          <div class="ok">
-            今天零食額度還剩 ${round(treatLeft)} kcal。<br />
-            可以留給肉泥、凍乾、騙水或生活練習。
-          </div>
-        `;
-      }
-
-      if (totalLeft < 0) {
-        notice.innerHTML += `
-          <div class="warning">
-            今日安排已超過每日總熱量 ${Math.abs(totalLeft)} kcal。
-          </div>
-        `;
-      }
-
-      resultCard.style.display = "block";
-
-      saveData();
+    function getNumber(id) {
+      return Number(document.getElementById(id).value);
     }
 
-    function saveData() {
-      const ids = [
-        "totalCalories",
-        "totalMeals",
-        "mainCalories",
-        "treatCalories",
-        "mainMeals",
-        "treatMeals",
-        "dryKcalPer100g",
-        "wetKcalPer100g",
-        "wetUseCalories"
-      ];
-
-      const data = {};
-      ids.forEach(id => {
-        data[id] = document.getElementById(id).value;
-      });
-
-      localStorage.setItem("catFoodToolV1", JSON.stringify(data));
+    function getValue(id) {
+      return document.getElementById(id).value;
     }
 
-    function loadData() {
-      const saved = localStorage.getItem("catFoodToolV1");
-      if (!saved) return;
+    function getFoodTitle(food) {
+      if (!food) return "未知食物";
+      return `${food.brand ? food.brand + " " : ""}${food.name}`;
+    }
 
-      try {
-        const data = JSON.parse(saved);
-        Object.keys(data).forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.value = data[id];
+    function saveFoods() {
+      localStorage.setItem("catFoodToolV3_foods", JSON.stringify(foods));
+    }
+
+    function saveSelections() {
+      localStorage.setItem("catFoodToolV3_selectedMainIds", JSON.stringify(selectedMainIds));
+      localStorage.setItem("catFoodToolV3_selectedTreatIds", JSON.stringify(selectedTreatIds));
+    }
+
+    function saveSettings() {
+      const settings = {
+        limitTotal: getValue("limitTotal"),
+        limitMain: getValue("limitMain"),
+        limitTreat: getValue("limitTreat"),
+        totalMeals: getValue("totalMeals"),
+        mainMealCount: getValue("mainMealCount"),
+        treatMealNumber: getValue("treatMealNumber")
+      };
+
+      localStorage.setItem("catFoodToolV3_settings", JSON.stringify(settings));
+    }
+
+    function loadAll() {
+      const savedFoods = localStorage.getItem("catFoodToolV3_foods");
+      const savedMain = localStorage.getItem("catFoodToolV3_selectedMainIds");
+      const savedTreat = localStorage.getItem("catFoodToolV3_selectedTreatIds");
+      const savedSettings = localStorage.getItem("catFoodToolV3_settings");
+
+      foods = savedFoods ? JSON.parse(savedFoods) : [];
+      selectedMainIds = savedMain ? JSON.parse(savedMain) : [];
+      selectedTreatIds = savedTreat ? JSON.parse(savedTreat) : [];
+
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        Object.keys(settings).forEach(key => {
+          const el = document.getElementById(key);
+          if (el) el.value = settings[key];
         });
-      } catch (e) {
-        console.log("讀取資料失敗");
       }
     }
 
-    loadData();
+    function showTab(tabName) {
+      document.getElementById("plannerTab").classList.toggle("hidden", tabName !== "planner");
+      document.getElementById("foodsTab").classList.toggle("hidden", tabName !== "foods");
+
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons[0].classList.toggle("active", tabName === "planner");
+      buttons[1].classList.toggle("active", tabName === "foods");
+
+      renderAll();
+    }
+
+    function updateFoodModeHelp() {
+      const mode = getValue("foodCalorieMode");
+
+      document.getElementById("modePer100g").classList.toggle("hidden", mode !== "per100g");
+      document.getElementById("modePerKg").classList.toggle("hidden", mode !== "perkg");
+      document.getElementById("modePerPack").classList.toggle("hidden", mode !== "perpack");
+    }
+
+    function calculateKcalPer100g() {
+      const mode = getValue("foodCalorieMode");
+
+      if (mode === "per100g") {
+        const value = getNumber("foodKcalPer100g");
+        if (!value || value <= 0) return null;
+        return value;
+      }
+
+      if (mode === "perkg") {
+        const value = getNumber("foodKcalPerKg");
+        if (!value || value <= 0) return null;
+        return value / 10;
+      }
+
+      if (mode === "perpack") {
+        const kcal = getNumber("foodPackKcal");
+        const gram = getNumber("foodPackGram");
+        if (!kcal || kcal <= 0 || !gram || gram <= 0) return null;
+        return kcal / gram * 100;
+      }
+
+      return null;
+    }
+
+    function addFood() {
+      const category = getValue("foodCategory");
+      const brand = getValue("foodBrand").trim();
+      const name = getValue("foodName").trim();
+      const note = getValue("foodNote").trim();
+      const kcalPer100g = calculateKcalPer100g();
+
+      if (!name) {
+        alert("請輸入品名");
+        return;
+      }
+
+      if (!kcalPer100g || kcalPer100g <= 0) {
+        alert("請輸入正確的熱量資料");
+        return;
+      }
+
+      const food = {
+        id: Date.now().toString(),
+        category,
+        brand,
+        name,
+        kcalPer100g: round(kcalPer100g, 2),
+        note
+      };
+
+      foods.push(food);
+      saveFoods();
+
+      document.getElementById("foodBrand").value = "";
+      document.getElementById("foodName").value = "";
+      document.getElementById("foodKcalPer100g").value = "";
+      document.getElementById("foodKcalPerKg").value = "";
+      document.getElementById("foodPackKcal").value = "";
+      document.getElementById("foodPackGram").value = "";
+      document.getElementById("foodNote").value = "";
+
+      renderAll();
+      alert("已新增食物！");
+    }
+
+    function deleteFood(id) {
+      if (!confirm("確定要刪除這個食物嗎？")) return;
+
+      foods = foods.filter(food => food.id !== id);
+      selectedMainIds = selectedMainIds.filter(foodId => foodId !== id);
+      selectedTreatIds = selectedTreatIds.filter(foodId => foodId !== id);
+
+      saveFoods();
+      saveSelections();
+      renderAll();
+    }
+
+    function renderFoodList() {
+      const foodList = document.getElementById("foodList");
+
+      if (foods.length === 0) {
+        foodList.innerHTML = `<p class="muted">目前還沒有食物資料。先新增乾飼料、罐頭或零食。</p>`;
+        return;
+      }
+
+      foodList.innerHTML = foods.map(food => {
+        const title = getFoodTitle(food);
+
+        return `
+          <div class="food-card">
+            <div class="food-title">${title}</div>
+            <div class="muted">分類：${food.category}</div>
+            <div class="muted">熱量：${food.kcalPer100g} kcal / 100g</div>
+            ${food.note ? `<div class="muted">備註：${food.note}</div>` : ""}
+            <button class="danger small-btn" onclick="deleteFood('${food.id}')">刪除</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function canBeMain(food) {
+      return food.category === "主食" || food.category === "皆可";
+    }
+
+    function canBeTreat(food) {
+      return food.category === "零食" || food.category === "皆可";
+    }
+
+    function toggleMainFood(id, checked) {
+      if (checked) {
+        if (!selectedMainIds.includes(id)) selectedMainIds.push(id);
+      } else {
+        selectedMainIds = selectedMainIds.filter(foodId => foodId !== id);
+      }
+
+      saveSelections();
+      generatePlan();
+    }
+
+    function toggleTreatFood(id, checked) {
+      if (checked) {
+        if (!selectedTreatIds.includes(id)) selectedTreatIds.push(id);
+      } else {
+        selectedTreatIds = selectedTreatIds.filter(foodId => foodId !== id);
+      }
+
+      saveSelections();
+      generatePlan();
+    }
+
+    function renderFoodChecks() {
+      const mainBox = document.getElementById("mainFoodChecks");
+      const treatBox = document.getElementById("treatFoodChecks");
+
+      const mainFoods = foods.filter(canBeMain);
+      const treatFoods = foods.filter(canBeTreat);
+
+      if (mainFoods.length === 0) {
+        mainBox.innerHTML = `<p class="muted">目前沒有可當主食的食物。請先到食物資料庫新增。</p>`;
+      } else {
+        mainBox.innerHTML = mainFoods.map(food => {
+          const checked = selectedMainIds.includes(food.id) ? "checked" : "";
+          return `
+            <label class="check-item">
+              <input type="checkbox" ${checked} onchange="toggleMainFood('${food.id}', this.checked)" />
+              <div>
+                <div class="food-title">${getFoodTitle(food)}</div>
+                <div class="muted">${food.kcalPer100g} kcal / 100g</div>
+              </div>
+            </label>
+          `;
+        }).join("");
+      }
+
+      if (treatFoods.length === 0) {
+        treatBox.innerHTML = `<p class="muted">目前沒有可當零食的食物。請先到食物資料庫新增。</p>`;
+      } else {
+        treatBox.innerHTML = treatFoods.map(food => {
+          const checked = selectedTreatIds.includes(food.id) ? "checked" : "";
+          return `
+            <label class="check-item">
+              <input type="checkbox" ${checked} onchange="toggleTreatFood('${food.id}', this.checked)" />
+              <div>
+                <div class="food-title">${getFoodTitle(food)}</div>
+                <div class="muted">${food.kcalPer100g} kcal / 100g</div>
+              </div>
+            </label>
+          `;
+        }).join("");
+      }
+    }
+
+    function generatePlan() {
+      const limitTotal = getNumber("limitTotal");
+      const limitMain = getNumber("limitMain");
+      const limitTreat = getNumber("limitTreat");
+      const totalMeals = getNumber("totalMeals");
+      const mainMealCount = getNumber("mainMealCount");
+      const treatMealNumber = getNumber("treatMealNumber");
+
+      const selectedMainFoods = selectedMainIds
+        .map(id => foods.find(food => food.id === id))
+        .filter(Boolean);
+
+      const selectedTreatFoods = selectedTreatIds
+        .map(id => foods.find(food => food.id === id))
+        .filter(Boolean);
+
+      const mealPlan = document.getElementById("mealPlan");
+      const planNotice = document.getElementById("planNotice");
+
+      document.getElementById("mainSummary").textContent = `${limitMain || 0} kcal`;
+      document.getElementById("treatSummary").textContent = `${limitTreat || 0} kcal`;
+      document.getElementById("totalSummary").textContent = `${(limitMain || 0) + (limitTreat || 0)} kcal`;
+
+      let noticeHtml = "";
+
+      if (!totalMeals || totalMeals <= 0) {
+        mealPlan.innerHTML = "";
+        planNotice.innerHTML = `<div class="notice-warn">一天總餐數要大於 0。</div>`;
+        return;
+      }
+
+      if (treatMealNumber < 1 || treatMealNumber > totalMeals) {
+        noticeHtml += `<div class="notice-warn">零食餐次要在 1 到 ${totalMeals} 之間。</div>`;
+      }
+
+      if (mainMealCount < 0 || mainMealCount > totalMeals) {
+        noticeHtml += `<div class="notice-warn">主食餐數不能小於 0，也不能大於總餐數。</div>`;
+      }
+
+      if (limitMain + limitTreat > limitTotal) {
+        noticeHtml += `<div class="notice-warn">主食＋零食已超過每日總熱量 ${round(limitMain + limitTreat - limitTotal)} kcal。</div>`;
+      } else if (limitMain + limitTreat < limitTotal) {
+        noticeHtml += `<div class="notice-ok">主食＋零食比每日總熱量少 ${round(limitTotal - limitMain - limitTreat)} kcal。</div>`;
+      } else {
+        noticeHtml += `<div class="notice-ok">主食＋零食剛好等於每日總熱量。</div>`;
+      }
+
+      if (selectedMainFoods.length === 0) {
+        noticeHtml += `<div class="notice-warn">請至少勾選一個主食。</div>`;
+      }
+
+      if (selectedTreatFoods.length === 0) {
+        noticeHtml += `<div class="notice-warn">請至少勾選一個零食／罐頭。</div>`;
+      }
+
+      planNotice.innerHTML = noticeHtml;
+
+      if (
+        !totalMeals ||
+        totalMeals <= 0 ||
+        !mainMealCount ||
+        mainMealCount < 0 ||
+        treatMealNumber < 1 ||
+        treatMealNumber > totalMeals ||
+        selectedMainFoods.length === 0
+      ) {
+        mealPlan.innerHTML = `<p class="muted">設定完成後，這裡會顯示 5 餐餐表。</p>`;
+        return;
+      }
+
+      const mainKcalPerFoodPerDay = selectedMainFoods.length > 0
+        ? limitMain / selectedMainFoods.length
+        : 0;
+
+      const mainKcalPerFoodPerMeal = mainMealCount > 0
+        ? mainKcalPerFoodPerDay / mainMealCount
+        : 0;
+
+      const treatKcalPerFoodPerDay = selectedTreatFoods.length > 0
+        ? limitTreat / selectedTreatFoods.length
+        : 0;
+
+      const meals = [];
+
+      let mainMealsAssigned = 0;
+
+      for (let mealNumber = 1; mealNumber <= totalMeals; mealNumber++) {
+        const isTreatMeal = mealNumber === treatMealNumber;
+        const items = [];
+
+        if (isTreatMeal && selectedTreatFoods.length > 0) {
+          selectedTreatFoods.forEach(food => {
+            const gram = treatKcalPerFoodPerDay / food.kcalPer100g * 100;
+            items.push({
+              title: getFoodTitle(food),
+              gram,
+              kcal: treatKcalPerFoodPerDay,
+              type: "零食"
+            });
+          });
+        }
+
+        if (!isTreatMeal && mainMealsAssigned < mainMealCount) {
+          selectedMainFoods.forEach(food => {
+            const gram = mainKcalPerFoodPerMeal / food.kcalPer100g * 100;
+            items.push({
+              title: getFoodTitle(food),
+              gram,
+              kcal: mainKcalPerFoodPerMeal,
+              type: "主食"
+            });
+          });
+
+          mainMealsAssigned++;
+        }
+
+        if (items.length === 0) {
+          items.push({
+            title: "不安排食物",
+            gram: 0,
+            kcal: 0,
+            type: "空餐"
+          });
+        }
+
+        meals.push({
+          mealNumber,
+          items
+        });
+      }
+
+      const mealHtml = meals.map(meal => {
+        const rows = meal.items.map(item => {
+          if (item.type === "空餐") {
+            return `
+              <div class="food-line">
+                <div>
+                  <strong>${item.title}</strong><br>
+                  <span class="muted">這餐沒有分配食物</span>
+                </div>
+                <div style="text-align:right;">—</div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="food-line">
+              <div>
+                <strong>${item.title}</strong><br>
+                <span class="muted">${item.type}｜約 ${round(item.kcal)} kcal</span>
+              </div>
+              <div style="text-align:right;">
+                約 ${round(item.gram)} g
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <div class="meal-card">
+            <div class="meal-title">第 ${meal.mealNumber} 餐</div>
+            ${rows}
+          </div>
+        `;
+      }).join("");
+
+      mealPlan.innerHTML = mealHtml;
+    }
+
+    function renderAll() {
+      renderFoodList();
+      renderFoodChecks();
+      generatePlan();
+    }
+
+    updateFoodModeHelp();
+    loadAll();
+    renderAll();
   </script>
 </body>
 </html>
