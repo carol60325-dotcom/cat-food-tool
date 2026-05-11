@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>貓咪每日餐量計算器 v3</title>
+  <title>貓咪主食排程與零食扣打器</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -18,29 +16,28 @@
     }
 
     .app {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px;
     }
 
     h1 {
       text-align: center;
+      font-size: 24px;
       margin: 10px 0 4px;
-      font-size: 25px;
     }
 
     .subtitle {
       text-align: center;
       color: #7b6654;
       font-size: 14px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
       position: sticky;
       top: 0;
       background: #fff8f0;
@@ -51,8 +48,8 @@
     .tab-btn {
       border: none;
       border-radius: 999px;
-      padding: 12px;
-      font-size: 15px;
+      padding: 10px 6px;
+      font-size: 13px;
       font-weight: 800;
       color: #6b4423;
       background: #f3dfc8;
@@ -60,12 +57,12 @@
     }
 
     .tab-btn.active {
-      color: #ffffff;
       background: #d8844f;
+      color: white;
     }
 
     .card {
-      background: #ffffff;
+      background: white;
       border-radius: 18px;
       padding: 16px;
       margin-bottom: 14px;
@@ -75,11 +72,6 @@
     h2 {
       font-size: 19px;
       margin: 0 0 10px;
-    }
-
-    h3 {
-      font-size: 16px;
-      margin: 12px 0 8px;
     }
 
     label {
@@ -101,7 +93,7 @@
     }
 
     textarea {
-      min-height: 64px;
+      min-height: 60px;
       resize: vertical;
     }
 
@@ -117,7 +109,7 @@
     .primary {
       width: 100%;
       background: #d8844f;
-      color: #ffffff;
+      color: white;
       margin-top: 14px;
     }
 
@@ -137,6 +129,7 @@
       padding: 8px 10px;
       font-size: 13px;
       border-radius: 10px;
+      margin-right: 6px;
     }
 
     .row {
@@ -151,6 +144,30 @@
       gap: 8px;
     }
 
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .summary-box {
+      background: #fff3e5;
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+
+    .summary-title {
+      font-size: 12px;
+      color: #7b6654;
+    }
+
+    .summary-value {
+      font-size: 22px;
+      font-weight: 900;
+      color: #b85f2a;
+    }
+
     .tag {
       display: inline-block;
       background: #f3dfc8;
@@ -162,52 +179,14 @@
       font-weight: 800;
     }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-    }
-
-    .summary-box {
-      background: #fff3e5;
-      border-radius: 14px;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .summary-title {
-      font-size: 12px;
-      color: #7b6654;
-    }
-
-    .summary-value {
-      font-size: 18px;
-      font-weight: 900;
-      color: #b85f2a;
-    }
-
-    .food-card {
-      background: #fffaf3;
-      border: 1px solid #ead9c7;
-      border-radius: 15px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-
-    .food-title {
-      font-weight: 900;
-      font-size: 16px;
-      margin-bottom: 2px;
-    }
-
     .muted {
       color: #7b6654;
       font-size: 13px;
     }
 
     .help {
-      font-size: 13px;
       color: #7b6654;
+      font-size: 13px;
       margin-top: 8px;
     }
 
@@ -233,43 +212,21 @@
       font-weight: 800;
     }
 
-    .check-list {
-      display: grid;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 12px;
+    .item-card {
       background: #fffaf3;
       border: 1px solid #ead9c7;
+      border-radius: 15px;
+      padding: 12px;
+      margin-top: 10px;
     }
 
-    .check-item input {
-      width: auto;
-      margin-top: 4px;
-    }
-
-    .meal-card {
-      background: #fffaf3;
-      border: 1px solid #ead9c7;
-      border-radius: 16px;
-      padding: 14px;
-      margin-top: 12px;
-    }
-
-    .meal-title {
-      font-size: 18px;
+    .item-title {
       font-weight: 900;
-      color: #b85f2a;
-      margin-bottom: 8px;
+      font-size: 16px;
+      margin-bottom: 2px;
     }
 
-    .food-line {
+    .line {
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -277,7 +234,7 @@
       padding: 8px 0;
     }
 
-    .food-line:last-child {
+    .line:last-child {
       border-bottom: none;
     }
 
@@ -288,102 +245,154 @@
       margin: 18px 0;
     }
 
-    @media (max-width: 460px) {
+    @media (max-width: 520px) {
       .row, .three-row, .summary-grid {
         grid-template-columns: 1fr;
       }
 
-      .app {
-        padding: 14px;
+      .tabs {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
 <body>
   <main class="app">
-    <h1>貓咪每日餐量計算器</h1>
-    <div class="subtitle">v3：勾選食物，自動產生 5 餐餐表</div>
+    <h1>貓咪主食排程與零食扣打器</h1>
+    <div class="subtitle">v5：餵食機主食固定，零食即時扣打</div>
 
     <div class="tabs">
-      <button class="tab-btn active" onclick="showTab('planner')">今日自動分配</button>
-      <button class="tab-btn" onclick="showTab('foods')">食物資料庫</button>
+      <button class="tab-btn active" onclick="showTab('home')">總覽</button>
+      <button class="tab-btn" onclick="showTab('main')">主食排程</button>
+      <button class="tab-btn" onclick="showTab('treat')">零食扣打</button>
+      <button class="tab-btn" onclick="showTab('foods')">食物資料</button>
     </div>
 
-    <!-- 今日自動分配 -->
-    <section id="plannerTab">
+    <!-- 總覽 -->
+    <section id="homeTab">
       <section class="card">
-        <span class="tag">每日限制</span>
-        <h2>今天的熱量與餐數</h2>
+        <span class="tag">今日設定</span>
+        <h2>每日熱量額度</h2>
 
         <div class="three-row">
           <div>
             <label>每日總熱量 kcal</label>
-            <input id="limitTotal" type="number" value="180" oninput="saveSettings(); generatePlan();" />
+            <input id="limitTotal" type="number" value="180" oninput="saveSettings(); renderAll();" />
           </div>
           <div>
             <label>主食額度 kcal</label>
-            <input id="limitMain" type="number" value="145" oninput="saveSettings(); generatePlan();" />
+            <input id="limitMain" type="number" value="145" oninput="saveSettings(); renderAll();" />
           </div>
           <div>
             <label>零食額度 kcal</label>
-            <input id="limitTreat" type="number" value="35" oninput="saveSettings(); generatePlan();" />
+            <input id="limitTreat" type="number" value="35" oninput="saveSettings(); renderAll();" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="tag">今日總覽</span>
+        <h2>目前還剩多少？</h2>
+
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-title">全天剩餘</div>
+            <div class="summary-value" id="leftTotal">180</div>
+            <div class="muted">kcal</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">零食剩餘</div>
+            <div class="summary-value" id="leftTreat">35</div>
+            <div class="muted">kcal</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">主食排程</div>
+            <div class="summary-value" id="mainScheduled">0</div>
+            <div class="muted">kcal</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-title">零食已吃</div>
+            <div class="summary-value" id="treatUsed">0</div>
+            <div class="muted">kcal</div>
           </div>
         </div>
 
+        <div id="homeNotice"></div>
+      </section>
+
+      <section class="card">
+        <span class="tag">今日零食紀錄</span>
+        <h2>實際已餵的零食／加餐</h2>
+        <div id="recordList"></div>
+        <button class="danger" onclick="clearTreatRecords()">清空今日零食紀錄</button>
+      </section>
+    </section>
+
+    <!-- 主食排程 -->
+    <section id="mainTab" class="hidden">
+      <section class="card">
+        <span class="tag">餵食機設定</span>
+        <h2>固定主食排程</h2>
+
+        <label>主食飼料</label>
+        <select id="mainFood" onchange="saveMainSchedule(); renderAll();"></select>
+
         <div class="three-row">
           <div>
-            <label>一天總餐數</label>
-            <input id="totalMeals" type="number" value="5" min="1" oninput="saveSettings(); generatePlan();" />
+            <label>每天主食餐數</label>
+            <input id="mainMeals" type="number" value="4" min="1" oninput="saveMainSchedule(); renderAll();" />
           </div>
           <div>
-            <label>主食餐數</label>
-            <input id="mainMealCount" type="number" value="4" min="0" oninput="saveSettings(); generatePlan();" />
+            <label>每餐幾克</label>
+            <input id="mainGramPerMeal" type="number" value="9" min="0" step="0.1" oninput="saveMainSchedule(); renderAll();" />
           </div>
           <div>
-            <label>零食放第幾餐</label>
-            <input id="treatMealNumber" type="number" value="3" min="1" oninput="saveSettings(); generatePlan();" />
+            <label>已出餐數</label>
+            <input id="mainFedMeals" type="number" value="0" min="0" oninput="saveMainSchedule(); renderAll();" />
           </div>
         </div>
 
         <p class="help">
-          預設是一天 5 餐，其中 4 餐主食，零食放第 3 餐。  
-          主食會平均分到主食餐，零食會放到指定餐。
+          這裡適合填餵食機設定。工具會把「今日主食排程」先算進全天熱量裡。
         </p>
+
+        <div id="mainScheduleResult"></div>
       </section>
 
       <section class="card">
-        <span class="tag">今日主食</span>
-        <h2>今天主食有哪些？</h2>
-        <div id="mainFoodChecks" class="check-list"></div>
+        <span class="tag">滾動調整</span>
+        <h2>如果零食吃多了，要怎麼補？</h2>
+        <div id="adjustAdvice"></div>
       </section>
+    </section>
 
+    <!-- 零食扣打 -->
+    <section id="treatTab" class="hidden">
       <section class="card">
-        <span class="tag">今日零食</span>
-        <h2>今天零食有哪些？</h2>
-        <div id="treatFoodChecks" class="check-list"></div>
-      </section>
+        <span class="tag">即時計算</span>
+        <h2>當下想餵什麼？</h2>
 
-      <section class="card">
-        <span class="tag">今日餐表</span>
-        <h2>自動產生結果</h2>
+        <label>選擇零食／加餐食物</label>
+        <select id="treatFood" onchange="previewTreat()"></select>
 
-        <div class="summary-grid">
-          <div class="summary-box">
-            <div class="summary-title">主食</div>
-            <div class="summary-value" id="mainSummary">0 kcal</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-title">零食</div>
-            <div class="summary-value" id="treatSummary">0 kcal</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-title">全天</div>
-            <div class="summary-value" id="totalSummary">0 kcal</div>
-          </div>
-        </div>
+        <label>計算方式</label>
+        <select id="treatMode" onchange="previewTreat()">
+          <option value="gram">我已經決定要餵幾 g</option>
+          <option value="kcal">我想使用幾 kcal，幫我算幾 g</option>
+          <option value="remainingTreat">使用剩餘零食額度，幫我算最多幾 g</option>
+          <option value="remainingTotal">使用剩餘全天額度，幫我算最多幾 g</option>
+        </select>
 
-        <div id="planNotice"></div>
-        <div id="mealPlan"></div>
+        <label>輸入數值</label>
+        <input id="treatValue" type="number" placeholder="例如 10" oninput="previewTreat()" />
+
+        <p class="help">
+          如果選「使用剩餘額度」，這格可以不用填。
+        </p>
+
+        <div id="treatPreview"></div>
+
+        <button class="primary" onclick="addTreatRecord()">記錄這次餵食</button>
       </section>
     </section>
 
@@ -391,7 +400,7 @@
     <section id="foodsTab" class="hidden">
       <section class="card">
         <span class="tag">新增食物</span>
-        <h2>建立手邊食物資料</h2>
+        <h2>建立食物資料</h2>
 
         <label>分類</label>
         <select id="foodCategory">
@@ -412,7 +421,7 @@
         </div>
 
         <label>熱量標示方式</label>
-        <select id="foodCalorieMode" onchange="updateFoodModeHelp()">
+        <select id="foodCalorieMode" onchange="updateFoodMode()">
           <option value="per100g">已知 kcal / 100g</option>
           <option value="perkg">包裝寫 kcal / kg</option>
           <option value="perpack">一包／一罐／一條共幾 kcal</option>
@@ -444,12 +453,7 @@
         <label>備註</label>
         <textarea id="foodNote" placeholder="例如：常當罐頭餐、開封後冷藏"></textarea>
 
-        <button class="primary" onclick="addFood()">＋新增到資料庫</button>
-
-        <p class="help">
-          乾飼料常見 3800 kcal/kg，系統會自動換算成 380 kcal/100g。<br>
-          罐頭如果寫 90 kcal/罐、80g，系統會換算成 112.5 kcal/100g。
-        </p>
+        <button class="primary" onclick="addFood()">＋新增食物</button>
       </section>
 
       <section class="card">
@@ -459,13 +463,12 @@
       </section>
     </section>
 
-    <div class="footer">資料會存在目前瀏覽器中｜貓咪每日餐量計算器 v3</div>
+    <div class="footer">資料存在目前瀏覽器中｜貓咪主食排程與零食扣打器 v5</div>
   </main>
 
   <script>
     let foods = [];
-    let selectedMainIds = [];
-    let selectedTreatIds = [];
+    let treatRecords = [];
 
     function round(value, digits = 1) {
       return Math.round(value * Math.pow(10, digits)) / Math.pow(10, digits);
@@ -484,86 +487,96 @@
       return `${food.brand ? food.brand + " " : ""}${food.name}`;
     }
 
-    function saveFoods() {
-      localStorage.setItem("catFoodToolV3_foods", JSON.stringify(foods));
+    function canBeMain(food) {
+      return food.category === "主食" || food.category === "皆可";
     }
 
-    function saveSelections() {
-      localStorage.setItem("catFoodToolV3_selectedMainIds", JSON.stringify(selectedMainIds));
-      localStorage.setItem("catFoodToolV3_selectedTreatIds", JSON.stringify(selectedTreatIds));
+    function canBeTreat(food) {
+      return food.category === "零食" || food.category === "皆可";
+    }
+
+    function saveAll() {
+      localStorage.setItem("catFoodToolV5_foods", JSON.stringify(foods));
+      localStorage.setItem("catFoodToolV5_treatRecords", JSON.stringify(treatRecords));
     }
 
     function saveSettings() {
       const settings = {
         limitTotal: getValue("limitTotal"),
         limitMain: getValue("limitMain"),
-        limitTreat: getValue("limitTreat"),
-        totalMeals: getValue("totalMeals"),
-        mainMealCount: getValue("mainMealCount"),
-        treatMealNumber: getValue("treatMealNumber")
+        limitTreat: getValue("limitTreat")
       };
+      localStorage.setItem("catFoodToolV5_settings", JSON.stringify(settings));
+    }
 
-      localStorage.setItem("catFoodToolV3_settings", JSON.stringify(settings));
+    function saveMainSchedule() {
+      const schedule = {
+        mainFood: getValue("mainFood"),
+        mainMeals: getValue("mainMeals"),
+        mainGramPerMeal: getValue("mainGramPerMeal"),
+        mainFedMeals: getValue("mainFedMeals")
+      };
+      localStorage.setItem("catFoodToolV5_mainSchedule", JSON.stringify(schedule));
     }
 
     function loadAll() {
-      const savedFoods = localStorage.getItem("catFoodToolV3_foods");
-      const savedMain = localStorage.getItem("catFoodToolV3_selectedMainIds");
-      const savedTreat = localStorage.getItem("catFoodToolV3_selectedTreatIds");
-      const savedSettings = localStorage.getItem("catFoodToolV3_settings");
+      foods = JSON.parse(localStorage.getItem("catFoodToolV5_foods") || "[]");
+      treatRecords = JSON.parse(localStorage.getItem("catFoodToolV5_treatRecords") || "[]");
 
-      foods = savedFoods ? JSON.parse(savedFoods) : [];
-      selectedMainIds = savedMain ? JSON.parse(savedMain) : [];
-      selectedTreatIds = savedTreat ? JSON.parse(savedTreat) : [];
+      const settings = JSON.parse(localStorage.getItem("catFoodToolV5_settings") || "{}");
+      Object.keys(settings).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) el.value = settings[key];
+      });
 
-      if (savedSettings) {
-        const settings = JSON.parse(savedSettings);
-        Object.keys(settings).forEach(key => {
-          const el = document.getElementById(key);
-          if (el) el.value = settings[key];
-        });
-      }
+      const schedule = JSON.parse(localStorage.getItem("catFoodToolV5_mainSchedule") || "{}");
+      Object.keys(schedule).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) el.value = schedule[key];
+      });
     }
 
     function showTab(tabName) {
-      document.getElementById("plannerTab").classList.toggle("hidden", tabName !== "planner");
+      document.getElementById("homeTab").classList.toggle("hidden", tabName !== "home");
+      document.getElementById("mainTab").classList.toggle("hidden", tabName !== "main");
+      document.getElementById("treatTab").classList.toggle("hidden", tabName !== "treat");
       document.getElementById("foodsTab").classList.toggle("hidden", tabName !== "foods");
 
       const buttons = document.querySelectorAll(".tab-btn");
-      buttons[0].classList.toggle("active", tabName === "planner");
-      buttons[1].classList.toggle("active", tabName === "foods");
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      if (tabName === "home") buttons[0].classList.add("active");
+      if (tabName === "main") buttons[1].classList.add("active");
+      if (tabName === "treat") buttons[2].classList.add("active");
+      if (tabName === "foods") buttons[3].classList.add("active");
 
       renderAll();
     }
 
-    function updateFoodModeHelp() {
+    function updateFoodMode() {
       const mode = getValue("foodCalorieMode");
-
       document.getElementById("modePer100g").classList.toggle("hidden", mode !== "per100g");
       document.getElementById("modePerKg").classList.toggle("hidden", mode !== "perkg");
       document.getElementById("modePerPack").classList.toggle("hidden", mode !== "perpack");
     }
 
-    function calculateKcalPer100g() {
+    function calculateFoodKcalPer100g() {
       const mode = getValue("foodCalorieMode");
 
       if (mode === "per100g") {
-        const value = getNumber("foodKcalPer100g");
-        if (!value || value <= 0) return null;
-        return value;
+        const v = getNumber("foodKcalPer100g");
+        return v > 0 ? v : null;
       }
 
       if (mode === "perkg") {
-        const value = getNumber("foodKcalPerKg");
-        if (!value || value <= 0) return null;
-        return value / 10;
+        const v = getNumber("foodKcalPerKg");
+        return v > 0 ? v / 10 : null;
       }
 
       if (mode === "perpack") {
         const kcal = getNumber("foodPackKcal");
         const gram = getNumber("foodPackGram");
-        if (!kcal || kcal <= 0 || !gram || gram <= 0) return null;
-        return kcal / gram * 100;
+        return kcal > 0 && gram > 0 ? kcal / gram * 100 : null;
       }
 
       return null;
@@ -574,7 +587,7 @@
       const brand = getValue("foodBrand").trim();
       const name = getValue("foodName").trim();
       const note = getValue("foodNote").trim();
-      const kcalPer100g = calculateKcalPer100g();
+      const kcalPer100g = calculateFoodKcalPer100g();
 
       if (!name) {
         alert("請輸入品名");
@@ -582,21 +595,18 @@
       }
 
       if (!kcalPer100g || kcalPer100g <= 0) {
-        alert("請輸入正確的熱量資料");
+        alert("請輸入正確熱量");
         return;
       }
 
-      const food = {
+      foods.push({
         id: Date.now().toString(),
         category,
         brand,
         name,
         kcalPer100g: round(kcalPer100g, 2),
         note
-      };
-
-      foods.push(food);
-      saveFoods();
+      });
 
       document.getElementById("foodBrand").value = "";
       document.getElementById("foodName").value = "";
@@ -606,293 +616,383 @@
       document.getElementById("foodPackGram").value = "";
       document.getElementById("foodNote").value = "";
 
+      saveAll();
       renderAll();
-      alert("已新增食物！");
+      alert("已新增食物");
     }
 
     function deleteFood(id) {
       if (!confirm("確定要刪除這個食物嗎？")) return;
 
-      foods = foods.filter(food => food.id !== id);
-      selectedMainIds = selectedMainIds.filter(foodId => foodId !== id);
-      selectedTreatIds = selectedTreatIds.filter(foodId => foodId !== id);
+      foods = foods.filter(f => f.id !== id);
+      treatRecords = treatRecords.filter(r => r.foodId !== id);
 
-      saveFoods();
-      saveSelections();
+      if (getValue("mainFood") === id) {
+        document.getElementById("mainFood").value = "";
+        saveMainSchedule();
+      }
+
+      saveAll();
       renderAll();
     }
 
     function renderFoodList() {
-      const foodList = document.getElementById("foodList");
+      const box = document.getElementById("foodList");
 
       if (foods.length === 0) {
-        foodList.innerHTML = `<p class="muted">目前還沒有食物資料。先新增乾飼料、罐頭或零食。</p>`;
+        box.innerHTML = `<p class="muted">目前還沒有食物。請先新增乾飼料、罐頭或零食。</p>`;
         return;
       }
 
-      foodList.innerHTML = foods.map(food => {
-        const title = getFoodTitle(food);
-
-        return `
-          <div class="food-card">
-            <div class="food-title">${title}</div>
-            <div class="muted">分類：${food.category}</div>
-            <div class="muted">熱量：${food.kcalPer100g} kcal / 100g</div>
-            ${food.note ? `<div class="muted">備註：${food.note}</div>` : ""}
-            <button class="danger small-btn" onclick="deleteFood('${food.id}')">刪除</button>
-          </div>
-        `;
-      }).join("");
+      box.innerHTML = foods.map(food => `
+        <div class="item-card">
+          <div class="item-title">${getFoodTitle(food)}</div>
+          <div class="muted">分類：${food.category}</div>
+          <div class="muted">熱量：${food.kcalPer100g} kcal / 100g</div>
+          ${food.note ? `<div class="muted">備註：${food.note}</div>` : ""}
+          <button class="danger small-btn" onclick="deleteFood('${food.id}')">刪除</button>
+        </div>
+      `).join("");
     }
 
-    function canBeMain(food) {
-      return food.category === "主食" || food.category === "皆可";
-    }
-
-    function canBeTreat(food) {
-      return food.category === "零食" || food.category === "皆可";
-    }
-
-    function toggleMainFood(id, checked) {
-      if (checked) {
-        if (!selectedMainIds.includes(id)) selectedMainIds.push(id);
-      } else {
-        selectedMainIds = selectedMainIds.filter(foodId => foodId !== id);
-      }
-
-      saveSelections();
-      generatePlan();
-    }
-
-    function toggleTreatFood(id, checked) {
-      if (checked) {
-        if (!selectedTreatIds.includes(id)) selectedTreatIds.push(id);
-      } else {
-        selectedTreatIds = selectedTreatIds.filter(foodId => foodId !== id);
-      }
-
-      saveSelections();
-      generatePlan();
-    }
-
-    function renderFoodChecks() {
-      const mainBox = document.getElementById("mainFoodChecks");
-      const treatBox = document.getElementById("treatFoodChecks");
+    function renderSelects() {
+      const mainSelect = document.getElementById("mainFood");
+      const treatSelect = document.getElementById("treatFood");
 
       const mainFoods = foods.filter(canBeMain);
       const treatFoods = foods.filter(canBeTreat);
 
-      if (mainFoods.length === 0) {
-        mainBox.innerHTML = `<p class="muted">目前沒有可當主食的食物。請先到食物資料庫新增。</p>`;
-      } else {
-        mainBox.innerHTML = mainFoods.map(food => {
-          const checked = selectedMainIds.includes(food.id) ? "checked" : "";
-          return `
-            <label class="check-item">
-              <input type="checkbox" ${checked} onchange="toggleMainFood('${food.id}', this.checked)" />
-              <div>
-                <div class="food-title">${getFoodTitle(food)}</div>
-                <div class="muted">${food.kcalPer100g} kcal / 100g</div>
-              </div>
-            </label>
-          `;
-        }).join("");
-      }
+      const oldMain = mainSelect.value;
+      const oldTreat = treatSelect.value;
 
-      if (treatFoods.length === 0) {
-        treatBox.innerHTML = `<p class="muted">目前沒有可當零食的食物。請先到食物資料庫新增。</p>`;
-      } else {
-        treatBox.innerHTML = treatFoods.map(food => {
-          const checked = selectedTreatIds.includes(food.id) ? "checked" : "";
-          return `
-            <label class="check-item">
-              <input type="checkbox" ${checked} onchange="toggleTreatFood('${food.id}', this.checked)" />
-              <div>
-                <div class="food-title">${getFoodTitle(food)}</div>
-                <div class="muted">${food.kcalPer100g} kcal / 100g</div>
-              </div>
-            </label>
-          `;
-        }).join("");
-      }
+      mainSelect.innerHTML = mainFoods.length
+        ? mainFoods.map(food => `<option value="${food.id}">${getFoodTitle(food)}｜${food.kcalPer100g} kcal/100g</option>`).join("")
+        : `<option value="">請先新增主食</option>`;
+
+      treatSelect.innerHTML = treatFoods.length
+        ? treatFoods.map(food => `<option value="${food.id}">${getFoodTitle(food)}｜${food.kcalPer100g} kcal/100g</option>`).join("")
+        : `<option value="">請先新增零食</option>`;
+
+      if (oldMain) mainSelect.value = oldMain;
+      if (oldTreat) treatSelect.value = oldTreat;
     }
 
-    function generatePlan() {
+    function getMainSchedule() {
+      const foodId = getValue("mainFood");
+      const food = foods.find(f => f.id === foodId);
+      const meals = getNumber("mainMeals");
+      const gramPerMeal = getNumber("mainGramPerMeal");
+      let fedMeals = getNumber("mainFedMeals");
+
+      if (fedMeals < 0) fedMeals = 0;
+      if (meals > 0 && fedMeals > meals) fedMeals = meals;
+
+      if (!food || !meals || meals <= 0 || !gramPerMeal || gramPerMeal < 0) {
+        return {
+          valid: false,
+          food: null,
+          meals: 0,
+          gramPerMeal: 0,
+          fedMeals: 0,
+          remainingMeals: 0,
+          totalGram: 0,
+          scheduledKcal: 0,
+          fedKcal: 0,
+          remainingKcal: 0
+        };
+      }
+
+      const totalGram = meals * gramPerMeal;
+      const scheduledKcal = totalGram * food.kcalPer100g / 100;
+      const fedKcal = fedMeals * gramPerMeal * food.kcalPer100g / 100;
+      const remainingMeals = meals - fedMeals;
+      const remainingKcal = remainingMeals * gramPerMeal * food.kcalPer100g / 100;
+
+      return {
+        valid: true,
+        food,
+        meals,
+        gramPerMeal,
+        fedMeals,
+        remainingMeals,
+        totalGram,
+        scheduledKcal,
+        fedKcal,
+        remainingKcal
+      };
+    }
+
+    function getTreatUsed() {
+      return treatRecords.reduce((sum, record) => sum + record.kcal, 0);
+    }
+
+    function getStatus() {
+      const main = getMainSchedule();
+      const treatUsed = getTreatUsed();
+
       const limitTotal = getNumber("limitTotal");
       const limitMain = getNumber("limitMain");
       const limitTreat = getNumber("limitTreat");
-      const totalMeals = getNumber("totalMeals");
-      const mainMealCount = getNumber("mainMealCount");
-      const treatMealNumber = getNumber("treatMealNumber");
 
-      const selectedMainFoods = selectedMainIds
-        .map(id => foods.find(food => food.id === id))
-        .filter(Boolean);
+      const scheduledMainKcal = main.valid ? main.scheduledKcal : 0;
+      const totalUsedPlanned = scheduledMainKcal + treatUsed;
 
-      const selectedTreatFoods = selectedTreatIds
-        .map(id => foods.find(food => food.id === id))
-        .filter(Boolean);
+      return {
+        main,
+        treatUsed,
+        limitTotal,
+        limitMain,
+        limitTreat,
+        leftTreat: limitTreat - treatUsed,
+        leftMain: limitMain - scheduledMainKcal,
+        leftTotal: limitTotal - totalUsedPlanned,
+        totalUsedPlanned
+      };
+    }
 
-      const mealPlan = document.getElementById("mealPlan");
-      const planNotice = document.getElementById("planNotice");
+    function renderDashboard() {
+      const s = getStatus();
 
-      document.getElementById("mainSummary").textContent = `${limitMain || 0} kcal`;
-      document.getElementById("treatSummary").textContent = `${limitTreat || 0} kcal`;
-      document.getElementById("totalSummary").textContent = `${(limitMain || 0) + (limitTreat || 0)} kcal`;
+      document.getElementById("leftTotal").textContent = round(s.leftTotal);
+      document.getElementById("leftTreat").textContent = round(s.leftTreat);
+      document.getElementById("mainScheduled").textContent = round(s.main.valid ? s.main.scheduledKcal : 0);
+      document.getElementById("treatUsed").textContent = round(s.treatUsed);
 
-      let noticeHtml = "";
+      let html = "";
 
-      if (!totalMeals || totalMeals <= 0) {
-        mealPlan.innerHTML = "";
-        planNotice.innerHTML = `<div class="notice-warn">一天總餐數要大於 0。</div>`;
+      if (!s.main.valid) {
+        html += `<div class="notice-warn">尚未設定主食排程。請到「主食排程」選擇餵食機飼料與每餐克數。</div>`;
+      }
+
+      if (s.leftMain < 0) {
+        html += `<div class="notice-warn">主食排程已超過主食額度 ${round(Math.abs(s.leftMain))} kcal。</div>`;
+      }
+
+      if (s.leftTreat < 0) {
+        html += `<div class="notice-warn">零食已超過建議額度 ${round(Math.abs(s.leftTreat))} kcal。</div>`;
+      }
+
+      if (s.leftTotal < 0) {
+        html += `<div class="notice-warn">以目前主食排程＋已吃零食來看，全天會超過 ${round(Math.abs(s.leftTotal))} kcal。</div>`;
+      }
+
+      if (!html) {
+        html = `<div class="notice-ok">目前主食排程與零食紀錄仍在今日額度內。</div>`;
+      }
+
+      document.getElementById("homeNotice").innerHTML = html;
+    }
+
+    function renderMainSchedule() {
+      const box = document.getElementById("mainScheduleResult");
+      const s = getStatus();
+
+      if (!s.main.valid) {
+        box.innerHTML = `<div class="notice-warn">請先選擇主食，並輸入每天幾餐、每餐幾克。</div>`;
         return;
       }
 
-      if (treatMealNumber < 1 || treatMealNumber > totalMeals) {
-        noticeHtml += `<div class="notice-warn">零食餐次要在 1 到 ${totalMeals} 之間。</div>`;
-      }
+      box.innerHTML = `
+        <div class="item-card">
+          <div class="item-title">${getFoodTitle(s.main.food)}</div>
+          <div class="line">
+            <div>每日主食總量</div>
+            <div>${round(s.main.totalGram)} g</div>
+          </div>
+          <div class="line">
+            <div>每日主食熱量</div>
+            <div>${round(s.main.scheduledKcal)} kcal</div>
+          </div>
+          <div class="line">
+            <div>已出餐數</div>
+            <div>${s.main.fedMeals} / ${s.main.meals} 餐</div>
+          </div>
+          <div class="line">
+            <div>尚未出餐</div>
+            <div>${s.main.remainingMeals} 餐</div>
+          </div>
+          <div class="line">
+            <div>尚未出餐熱量</div>
+            <div>${round(s.main.remainingKcal)} kcal</div>
+          </div>
+        </div>
+      `;
+    }
 
-      if (mainMealCount < 0 || mainMealCount > totalMeals) {
-        noticeHtml += `<div class="notice-warn">主食餐數不能小於 0，也不能大於總餐數。</div>`;
-      }
+    function renderAdjustAdvice() {
+      const box = document.getElementById("adjustAdvice");
+      const s = getStatus();
 
-      if (limitMain + limitTreat > limitTotal) {
-        noticeHtml += `<div class="notice-warn">主食＋零食已超過每日總熱量 ${round(limitMain + limitTreat - limitTotal)} kcal。</div>`;
-      } else if (limitMain + limitTreat < limitTotal) {
-        noticeHtml += `<div class="notice-ok">主食＋零食比每日總熱量少 ${round(limitTotal - limitMain - limitTreat)} kcal。</div>`;
-      } else {
-        noticeHtml += `<div class="notice-ok">主食＋零食剛好等於每日總熱量。</div>`;
-      }
-
-      if (selectedMainFoods.length === 0) {
-        noticeHtml += `<div class="notice-warn">請至少勾選一個主食。</div>`;
-      }
-
-      if (selectedTreatFoods.length === 0) {
-        noticeHtml += `<div class="notice-warn">請至少勾選一個零食／罐頭。</div>`;
-      }
-
-      planNotice.innerHTML = noticeHtml;
-
-      if (
-        !totalMeals ||
-        totalMeals <= 0 ||
-        !mainMealCount ||
-        mainMealCount < 0 ||
-        treatMealNumber < 1 ||
-        treatMealNumber > totalMeals ||
-        selectedMainFoods.length === 0
-      ) {
-        mealPlan.innerHTML = `<p class="muted">設定完成後，這裡會顯示 5 餐餐表。</p>`;
+      if (!s.main.valid) {
+        box.innerHTML = `<p class="muted">設定主食排程後，這裡會顯示調整建議。</p>`;
         return;
       }
 
-      const mainKcalPerFoodPerDay = selectedMainFoods.length > 0
-        ? limitMain / selectedMainFoods.length
-        : 0;
-
-      const mainKcalPerFoodPerMeal = mainMealCount > 0
-        ? mainKcalPerFoodPerDay / mainMealCount
-        : 0;
-
-      const treatKcalPerFoodPerDay = selectedTreatFoods.length > 0
-        ? limitTreat / selectedTreatFoods.length
-        : 0;
-
-      const meals = [];
-
-      let mainMealsAssigned = 0;
-
-      for (let mealNumber = 1; mealNumber <= totalMeals; mealNumber++) {
-        const isTreatMeal = mealNumber === treatMealNumber;
-        const items = [];
-
-        if (isTreatMeal && selectedTreatFoods.length > 0) {
-          selectedTreatFoods.forEach(food => {
-            const gram = treatKcalPerFoodPerDay / food.kcalPer100g * 100;
-            items.push({
-              title: getFoodTitle(food),
-              gram,
-              kcal: treatKcalPerFoodPerDay,
-              type: "零食"
-            });
-          });
-        }
-
-        if (!isTreatMeal && mainMealsAssigned < mainMealCount) {
-          selectedMainFoods.forEach(food => {
-            const gram = mainKcalPerFoodPerMeal / food.kcalPer100g * 100;
-            items.push({
-              title: getFoodTitle(food),
-              gram,
-              kcal: mainKcalPerFoodPerMeal,
-              type: "主食"
-            });
-          });
-
-          mainMealsAssigned++;
-        }
-
-        if (items.length === 0) {
-          items.push({
-            title: "不安排食物",
-            gram: 0,
-            kcal: 0,
-            type: "空餐"
-          });
-        }
-
-        meals.push({
-          mealNumber,
-          items
-        });
-      }
-
-      const mealHtml = meals.map(meal => {
-        const rows = meal.items.map(item => {
-          if (item.type === "空餐") {
-            return `
-              <div class="food-line">
-                <div>
-                  <strong>${item.title}</strong><br>
-                  <span class="muted">這餐沒有分配食物</span>
-                </div>
-                <div style="text-align:right;">—</div>
-              </div>
-            `;
-          }
-
-          return `
-            <div class="food-line">
-              <div>
-                <strong>${item.title}</strong><br>
-                <span class="muted">${item.type}｜約 ${round(item.kcal)} kcal</span>
-              </div>
-              <div style="text-align:right;">
-                約 ${round(item.gram)} g
-              </div>
-            </div>
-          `;
-        }).join("");
-
-        return `
-          <div class="meal-card">
-            <div class="meal-title">第 ${meal.mealNumber} 餐</div>
-            ${rows}
+      if (s.leftTotal >= 0) {
+        box.innerHTML = `
+          <div class="notice-ok">
+            目前全天還剩 ${round(s.leftTotal)} kcal，暫時不需要減少主食。
           </div>
         `;
-      }).join("");
+        return;
+      }
 
-      mealPlan.innerHTML = mealHtml;
+      const overKcal = Math.abs(s.leftTotal);
+
+      if (s.main.remainingMeals <= 0) {
+        box.innerHTML = `
+          <div class="notice-warn">
+            今日全天預估超過 ${round(overKcal)} kcal，但主食已沒有尚未出餐的餐次可調整。
+          </div>
+        `;
+        return;
+      }
+
+      const food = s.main.food;
+      const reduceTotalGram = overKcal / food.kcalPer100g * 100;
+      const reducePerMeal = reduceTotalGram / s.main.remainingMeals;
+      const newGramPerMeal = Math.max(0, s.main.gramPerMeal - reducePerMeal);
+
+      box.innerHTML = `
+        <div class="notice-warn">
+          目前全天預估超過 ${round(overKcal)} kcal。<br>
+          若要補回 180 kcal，建議從尚未出餐的主食中總共減少約 ${round(reduceTotalGram)} g。<br>
+          你還有 ${s.main.remainingMeals} 餐主食未出，平均每餐約少 ${round(reducePerMeal)} g。<br>
+          原本每餐 ${round(s.main.gramPerMeal)} g，可考慮調成每餐約 ${round(newGramPerMeal)} g。
+        </div>
+      `;
+    }
+
+    function calculateTreat() {
+      const foodId = getValue("treatFood");
+      const food = foods.find(f => f.id === foodId);
+      const mode = getValue("treatMode");
+      const value = getNumber("treatValue");
+      const s = getStatus();
+
+      if (!food) return null;
+
+      let kcal = 0;
+      let gram = 0;
+
+      if (mode === "gram") {
+        if (!value || value <= 0) return null;
+        gram = value;
+        kcal = gram * food.kcalPer100g / 100;
+      }
+
+      if (mode === "kcal") {
+        if (!value || value <= 0) return null;
+        kcal = value;
+        gram = kcal / food.kcalPer100g * 100;
+      }
+
+      if (mode === "remainingTreat") {
+        kcal = s.leftTreat;
+        if (kcal <= 0) return null;
+        gram = kcal / food.kcalPer100g * 100;
+      }
+
+      if (mode === "remainingTotal") {
+        kcal = s.leftTotal;
+        if (kcal <= 0) return null;
+        gram = kcal / food.kcalPer100g * 100;
+      }
+
+      return {
+        food,
+        kcal: round(kcal, 2),
+        gram: round(gram, 2)
+      };
+    }
+
+    function previewTreat() {
+      const box = document.getElementById("treatPreview");
+      const result = calculateTreat();
+
+      if (!result) {
+        box.innerHTML = `<div class="notice-warn">請選擇食物並輸入有效數值。</div>`;
+        return;
+      }
+
+      const s = getStatus();
+      const afterTreatLeft = s.leftTreat - result.kcal;
+      const afterTotalLeft = s.leftTotal - result.kcal;
+
+      box.innerHTML = `
+        <div class="notice-ok">
+          這次約 ${round(result.gram)} g，會扣 ${round(result.kcal)} kcal。<br>
+          記錄後零食剩餘：約 ${round(afterTreatLeft)} kcal。<br>
+          記錄後全天剩餘：約 ${round(afterTotalLeft)} kcal。
+        </div>
+      `;
+    }
+
+    function addTreatRecord() {
+      const result = calculateTreat();
+
+      if (!result) {
+        alert("請先完成零食計算");
+        return;
+      }
+
+      treatRecords.push({
+        id: Date.now().toString(),
+        time: new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" }),
+        foodId: result.food.id,
+        title: getFoodTitle(result.food),
+        gram: result.gram,
+        kcal: result.kcal
+      });
+
+      document.getElementById("treatValue").value = "";
+
+      saveAll();
+      renderAll();
+      alert("已記錄這次餵食");
+    }
+
+    function deleteTreatRecord(id) {
+      treatRecords = treatRecords.filter(r => r.id !== id);
+      saveAll();
+      renderAll();
+    }
+
+    function clearTreatRecords() {
+      if (!confirm("確定要清空今日零食紀錄嗎？")) return;
+      treatRecords = [];
+      saveAll();
+      renderAll();
+    }
+
+    function renderTreatRecords() {
+      const box = document.getElementById("recordList");
+
+      if (treatRecords.length === 0) {
+        box.innerHTML = `<p class="muted">今天還沒有零食／加餐紀錄。</p>`;
+        return;
+      }
+
+      box.innerHTML = treatRecords.slice().reverse().map(r => `
+        <div class="item-card">
+          <div class="item-title">${r.time}｜${r.title}</div>
+          <div class="muted">約 ${round(r.gram)} g｜${round(r.kcal)} kcal</div>
+          <button class="danger small-btn" onclick="deleteTreatRecord('${r.id}')">刪除這筆</button>
+        </div>
+      `).join("");
     }
 
     function renderAll() {
+      renderSelects();
+      renderDashboard();
+      renderMainSchedule();
+      renderAdjustAdvice();
       renderFoodList();
-      renderFoodChecks();
-      generatePlan();
+      renderTreatRecords();
+      previewTreat();
     }
 
-    updateFoodModeHelp();
+    updateFoodMode();
     loadAll();
     renderAll();
   </script>
