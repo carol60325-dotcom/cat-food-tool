@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>貓咪每日餐量計算器</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: #fff8f0;
+      color: #3a2a1f;
+      line-height: 1.6;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 12px 0 4px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7b6654;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 20px rgba(120, 80, 40, 0.12);
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 19px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #d8c8b6;
+      border-radius: 12px;
+      font-size: 16px;
+      background: #fffdf9;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #d8844f;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .result-main {
+      font-size: 28px;
+      font-weight: 800;
+      color: #b85f2a;
+      margin: 4px 0;
+    }
+
+    .result-box {
+      background: #fff3e5;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #7b6654;
+    }
+
+    .warning {
+      background: #fff0f0;
+      color: #9d2d2d;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .ok {
+      background: #effaf2;
+      color: #2e7d45;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      color: #8b7765;
+      font-size: 12px;
+      margin: 20px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #f3dfc8;
+      color: #6b4423;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>貓咪每日餐量計算器</h1>
+    <div class="subtitle">第一版：主食 145 kcal＋零食 35 kcal</div>
+
+    <section class="card">
+      <span class="tag">每日設定</span>
+      <h2>今天的熱量額度</h2>
+
+      <div class="row">
+        <div>
+          <label>每日總熱量 kcal</label>
+          <input id="totalCalories" type="number" value="180" />
+        </div>
+        <div>
+          <label>一天總餐數</label>
+          <input id="totalMeals" type="number" value="5" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>主食熱量 kcal</label>
+          <input id="mainCalories" type="number" value="145" />
+        </div>
+        <div>
+          <label>零食熱量 kcal</label>
+          <input id="treatCalories" type="number" value="35" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>主食餐數</label>
+          <input id="mainMeals" type="number" value="4" />
+        </div>
+        <div>
+          <label>罐頭／零食餐數</label>
+          <input id="treatMeals" type="number" value="1" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="tag">主食</span>
+      <h2>乾飼料</h2>
+
+      <label>乾飼料熱量 kcal / 100g</label>
+      <input id="dryKcalPer100g" type="number" placeholder="例如：380" />
+
+      <p class="small">
+        如果包裝寫 3800 kcal/kg，請填 380。<br />
+        因為 3800 kcal/kg = 380 kcal/100g。
+      </p>
+    </section>
+
+    <section class="card">
+      <span class="tag">零食額度</span>
+      <h2>罐頭或其他濕食</h2>
+
+      <label>罐頭熱量 kcal / 100g</label>
+      <input id="wetKcalPer100g" type="number" placeholder="例如：90" />
+
+      <label>今天想用多少零食額度給罐頭 kcal</label>
+      <input id="wetUseCalories" type="number" value="35" />
+
+      <p class="small">
+        如果罐頭用滿 35 kcal，今天就不建議再給其他零食。<br />
+        如果只用 25 kcal，就還有 10 kcal 可以給肉泥、凍乾或訓練用。
+      </p>
+    </section>
+
+    <section class="card">
+      <button onclick="calculate()">計算今天餵多少</button>
+    </section>
+
+    <section class="card" id="resultCard" style="display:none;">
+      <span class="tag">計算結果</span>
+      <h2>今天建議份量</h2>
+
+      <div class="result-box">
+        <div>乾飼料一天總量</div>
+        <div class="result-main" id="dryTotalGram">-- g</div>
+        <div class="small" id="dryMealGram">每餐 -- g</div>
+      </div>
+
+      <div class="result-box">
+        <div>罐頭／濕食今日份量</div>
+        <div class="result-main" id="wetTotalGram">-- g</div>
+        <div class="small" id="wetMealGram">每餐 -- g</div>
+      </div>
+
+      <div class="result-box">
+        <div>今日熱量分配</div>
+        <p id="calorieSummary"></p>
+      </div>
+
+      <div id="notice"></div>
+    </section>
+
+    <section class="card">
+      <span class="tag">小提醒</span>
+      <h2>使用方式</h2>
+      <p>
+        這個版本的邏輯是：乾飼料算主食，罐頭算零食額度。
+        如果哪天罐頭想當主食吃，就之後可以再做第二種模式。
+      </p>
+      <p class="small">
+        這只是幫你換算克數的小工具，熱量目標仍以醫生建議為主。
+      </p>
+    </section>
+
+    <div class="footer">貓咪每日餐量計算器 v1</div>
+  </main>
+
+  <script>
+    function getNumber(id) {
+      return Number(document.getElementById(id).value);
+    }
+
+    function round(value, digits = 1) {
+      return Math.round(value * Math.pow(10, digits)) / Math.pow(10, digits);
+    }
+
+    function calculate() {
+      const totalCalories = getNumber("totalCalories");
+      const mainCalories = getNumber("mainCalories");
+      const treatCalories = getNumber("treatCalories");
+      const totalMeals = getNumber("totalMeals");
+      const mainMeals = getNumber("mainMeals");
+      const treatMeals = getNumber("treatMeals");
+
+      const dryKcalPer100g = getNumber("dryKcalPer100g");
+      const wetKcalPer100g = getNumber("wetKcalPer100g");
+      const wetUseCalories = getNumber("wetUseCalories");
+
+      const resultCard = document.getElementById("resultCard");
+      const notice = document.getElementById("notice");
+
+      if (!dryKcalPer100g || dryKcalPer100g <= 0) {
+        alert("請輸入乾飼料的熱量，例如 380 kcal / 100g");
+        return;
+      }
+
+      if (!wetKcalPer100g || wetKcalPer100g <= 0) {
+        alert("請輸入罐頭或濕食的熱量，例如 90 kcal / 100g");
+        return;
+      }
+
+      if (!mainMeals || mainMeals <= 0) {
+        alert("主食餐數要大於 0");
+        return;
+      }
+
+      if (!treatMeals || treatMeals <= 0) {
+        alert("罐頭／零食餐數要大於 0");
+        return;
+      }
+
+      const dryTotalGram = mainCalories / dryKcalPer100g * 100;
+      const dryMealGram = dryTotalGram / mainMeals;
+
+      const wetTotalGram = wetUseCalories / wetKcalPer100g * 100;
+      const wetMealGram = wetTotalGram / treatMeals;
+
+      const treatLeft = treatCalories - wetUseCalories;
+      const usedTotalCalories = mainCalories + wetUseCalories;
+      const totalLeft = totalCalories - usedTotalCalories;
+
+      document.getElementById("dryTotalGram").textContent = `${round(dryTotalGram)} g`;
+      document.getElementById("dryMealGram").textContent = `分 ${mainMeals} 餐，每餐約 ${round(dryMealGram)} g`;
+
+      document.getElementById("wetTotalGram").textContent = `${round(wetTotalGram)} g`;
+      document.getElementById("wetMealGram").textContent = `分 ${treatMeals} 餐，每餐約 ${round(wetMealGram)} g`;
+
+      document.getElementById("calorieSummary").innerHTML = `
+        主食：${mainCalories} kcal<br />
+        罐頭／零食已使用：${wetUseCalories} kcal<br />
+        今日已安排：${usedTotalCalories} kcal<br />
+        每日上限：${totalCalories} kcal
+      `;
+
+      if (treatLeft < 0) {
+        notice.innerHTML = `
+          <div class="warning">
+            罐頭已超過零食額度 ${Math.abs(treatLeft)} kcal。<br />
+            今天總熱量可能會超過醫生建議，可以減少罐頭或其他零食。
+          </div>
+        `;
+      } else if (treatLeft === 0) {
+        notice.innerHTML = `
+          <div class="ok">
+            今天零食額度剛好用完。<br />
+            如果罐頭吃滿這個份量，今天就不建議再給其他零食。
+          </div>
+        `;
+      } else {
+        notice.innerHTML = `
+          <div class="ok">
+            今天零食額度還剩 ${round(treatLeft)} kcal。<br />
+            可以留給肉泥、凍乾、騙水或生活練習。
+          </div>
+        `;
+      }
+
+      if (totalLeft < 0) {
+        notice.innerHTML += `
+          <div class="warning">
+            今日安排已超過每日總熱量 ${Math.abs(totalLeft)} kcal。
+          </div>
+        `;
+      }
+
+      resultCard.style.display = "block";
+
+      saveData();
+    }
+
+    function saveData() {
+      const ids = [
+        "totalCalories",
+        "totalMeals",
+        "mainCalories",
+        "treatCalories",
+        "mainMeals",
+        "treatMeals",
+        "dryKcalPer100g",
+        "wetKcalPer100g",
+        "wetUseCalories"
+      ];
+
+      const data = {};
+      ids.forEach(id => {
+        data[id] = document.getElementById(id).value;
+      });
+
+      localStorage.setItem("catFoodToolV1", JSON.stringify(data));
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem("catFoodToolV1");
+      if (!saved) return;
+
+      try {
+        const data = JSON.parse(saved);
+        Object.keys(data).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = data[id];
+        });
+      } catch (e) {
+        console.log("讀取資料失敗");
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
